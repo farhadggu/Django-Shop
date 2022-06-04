@@ -73,7 +73,7 @@ class VerifyCodeForm(forms.Form):
 
 
 class UserLoginForm(forms.Form):
-    email = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'ایمیل کاربری'}))
+    email = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'ایمیل کاربری / نام کاربری'}))
     password = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control', 'placeholder':'رمز عبور'}))
 
 

@@ -5,13 +5,12 @@ from django.db import models
 #==>Local Import
 from product.models import Variant
 from account.models import ProfileAddress
+from product.models import TimeStamp
 
 
-class Order(models.Model):
+class Order(TimeStamp):
 	user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='orders', verbose_name='کاربر')
 	paid = models.BooleanField(default=False, verbose_name='پرداخت شده؟')
-	created = models.DateTimeField(auto_now_add=True, verbose_name='تاریخ ایجاد شده')
-	updated = models.DateTimeField(auto_now=True, verbose_name='تاریخ به روز رسانی شده')
 	discount = models.IntegerField(blank=True, null=True, default=None, verbose_name='تخفیف')
 	address = models.ForeignKey(ProfileAddress, on_delete=models.CASCADE, null=True, blank=True, verbose_name='آدرس')
 
@@ -33,7 +32,7 @@ class Order(models.Model):
 	get_total_price.short_description = 'قیمت تمام شده (تخفیف محصول/کدتخفیف)'
 
 
-class OrderItem(models.Model):
+class OrderItem(TimeStamp):
 	order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='orderitem_order', verbose_name='سفارش')
 	variant = models.ForeignKey(Variant, on_delete=models.CASCADE, verbose_name='محصول')
 	price = models.IntegerField(verbose_name='قیمت')

@@ -17,6 +17,7 @@ from .forms import RegistrationForm, UserLoginForm, VerifyCodeForm, ProfileForm,
 from .models import OtpCode, User, ProfileAddress
 from .tokens import account_activation_token
 from .utils import send_otp_code
+from order.models import Order
 
 
 class RegisterView(View):
@@ -163,7 +164,12 @@ class EditProfileView(View):
         address_form = ProfileAddressForm
         form = self.form_class(instance=request.user.profile)
         address = ProfileAddress.objects.filter(user=request.user)
-        return render(request, self.template_name, {'form':form, 'address_form':address_form, 'address':address})
+        orders = Order.objects.filter(user=request.user)
+        context = {
+            'form':form, 'address_form':address_form,
+            'address':address, 'orders':orders
+        }
+        return render(request, self.template_name, context)
 
     def post(self, request):
         form = self.form_class(request.POST, request.FILES, instance=request.user.profile)

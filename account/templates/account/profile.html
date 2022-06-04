@@ -22,12 +22,6 @@
                       <li class="nav-item">
                         <a class="nav-link" id="orders-tab" data-toggle="tab" href="#orders" role="tab" aria-controls="orders" aria-selected="false"><i class="ti-shopping-cart-full"></i>سفارشات</a>
                       </li>
-                      {% comment %} <li class="nav-item">
-                        <a class="nav-link" href="{% url 'account:address' %}"><i class="ti-location-pin"></i>آدرس من</a>
-                      </li> {% endcomment %}
-                      {% comment %} <li class="nav-item">
-                        <a class="nav-link" href="{% url 'account:change-password' request.user.username %}"><i class="ti-lock"></i>تغییر رمز عبور</a>
-                      </li> {% endcomment %}
                       <li class="nav-item">
                         <a class="nav-link" href="{% url 'account:logout' %}"><i class="ti-lock"></i>خروج</a>
                       </li>
@@ -106,7 +100,7 @@
                             </div>
                         </div>
                   	</div>
-                  	{% comment %} <div class="tab-pane fade" id="orders" role="tabpanel" aria-labelledby="orders-tab">
+                  	<div class="tab-pane fade" id="orders" role="tabpanel" aria-labelledby="orders-tab">
                     	<div class="card">
                         	<div class="card-header">
                                 <h3>سفارشات</h3>
@@ -116,33 +110,29 @@
                                     <table class="table">
                                         <thead>
                                             <tr>
-                                                <th>سفارش</th>
-                                                <th>تاریخ</th>
                                                 <th>وضعیت</th>
+                                                <th>تاریخ</th>
                                                 <th>جمع</th>
+                                                <th>سفارش</th>
                                                 <th>تصویر</th>
                                                 <th>مبلغ نهایی</th>
-                                                <th>کد پیگیری</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {% for item in order %}
+                                            {% for order in orders %}
                                             <tr>
-                                                {% if item.product.variants == 'None' %}
-                                                <td>#{{forloop.counter}} {{item.product}}</td>
-                                                {% elif item.product.variants == 'Size' %}
-                                                <td>#{{forloop.counter}} {{item.product}} {{item.variant.size}}</td>
-                                                {% elif item.product.variants == 'Color' %}
-                                                <td>#{{forloop.counter}} {{item.product}} {{item.variant.color}}</td>
-                                                {% elif item.product.variants == 'Size-Color' %}
-                                                <td>#{{forloop.counter}} {{item.product}} {{item.variant.size}} {{item.variant.color}}</td>
+                                                {% if order.paid == True %}
+                                                <td>#{{forloop.counter}} پرداخت شده</td>
+                                                {% else %}
+                                                <td>#{{forloop.counter}} پرداخت نشده</td>
                                                 {% endif %}
-                                                <td>{{item.jcreated}}</td>
-                                                <td>{{item.order.status}}</td>
-                                                <td>{{item.total_price|intcomma}} تومان {{item.quantity}} عدد</td>
-                                                <td><img src="{{item.product.image.url}}" width="100px"></td>
-                                                <td>{{item.order.off_price|intcomma}}</td>
-                                                <td>{{item.order.code}}</td>
+                                                <td>{{order.jcreated}}</td>
+                                                {% for order in order.orderitem_order.all %}
+                                                <td>{{order.price}} تومان {{order.quantity}} عدد</td>
+                                                <td>{{order.variant.title}}</td>
+                                                <td><img src="{{order.variant.image.url}}" width="100px"></td>
+                                                {% endfor %}
+                                                <td>{{order.get_total_price}}</td>
                                             </tr>
                                             {% endfor %}
                                         </tbody>
@@ -150,7 +140,7 @@
                                 </div>
                             </div>
                         </div>
-                  	</div> {% endcomment %}
+                  	</div>
 					<div class="tab-pane fade" id="address" role="tabpanel" aria-labelledby="address-tab">
 
                             <div class="card-body mb-4">

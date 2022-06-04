@@ -87,3 +87,13 @@ class ProductListView(View):
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
         return render(request, 'product/product_list.html', {'products':page_obj, 'filter':filtered_products, 'max_price':max_price, 'min_price':min_price, 'categories':categories})
+
+
+class AboutUs(View):
+    def get(self, request):
+        return render(request, 'about-us.html')
+
+
+class ContactUs(View):
+    def get(self, request):
+        return render(request, 'contact-us.html')
