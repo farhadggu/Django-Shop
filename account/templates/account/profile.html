@@ -1,0 +1,259 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}پروفایل کاربری{% endblock title %}
+{% block content %}
+
+    <!-- START MAIN CONTENT -->
+<div class="main_content">
+
+<!-- START SECTION SHOP -->
+<div class="section">
+	<div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-4">
+                <div class="dashboard_menu">
+                    <ul class="nav nav-tabs flex-column" role="tablist">
+                      <li class="nav-item">
+                        <a class="nav-link active show" id="dashboard-tab" data-toggle="tab" href="#dashboard" role="tab" aria-controls="dashboard" aria-selected="true"><i class="ti-layout-grid2"></i>داشبورد</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link show" id="address-tab" data-toggle="tab" href="#address" role="tab" aria-controls="address" aria-selected="false"><i class="ti-location-pin"></i>آدرس من</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" id="orders-tab" data-toggle="tab" href="#orders" role="tab" aria-controls="orders" aria-selected="false"><i class="ti-shopping-cart-full"></i>سفارشات</a>
+                      </li>
+                      {% comment %} <li class="nav-item">
+                        <a class="nav-link" href="{% url 'account:address' %}"><i class="ti-location-pin"></i>آدرس من</a>
+                      </li> {% endcomment %}
+                      {% comment %} <li class="nav-item">
+                        <a class="nav-link" href="{% url 'account:change-password' request.user.username %}"><i class="ti-lock"></i>تغییر رمز عبور</a>
+                      </li> {% endcomment %}
+                      <li class="nav-item">
+                        <a class="nav-link" href="{% url 'account:logout' %}"><i class="ti-lock"></i>خروج</a>
+                      </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-9 col-md-8">
+                <div class="tab-content dashboard_content">
+                  	<div class="tab-pane fade active show" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
+                    	<div class="card">
+                        	<div class="card-header">
+                                <h3>جزئیات حساب کاربری</h3>
+                            </div>
+                            <div class="card-body">
+                                <form method="post" action="{% url 'account:update_phone' %}">
+                                    {% csrf_token %}
+                                    <div class="form-group col-12">
+                                        <labelشماره تماس <span class="required">*</span></label>
+                                        <input type="text" name="phone" value="{{user.phone}}" maxlength="100" class="form-control">
+                                        <br/>
+                                        <div class="col-md-12">
+                                            <button type="submit" class="btn btn-fill-out" name="submit" value="Submit">تغییر شماره تلفن</button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                                <form method="post" action="{% url 'account:change_username' %}">
+                                    {% csrf_token %}
+                                    <div class="form-group col-12">
+                                        <label>نام کاربری <span class="required">*</span></label>
+                                        <input type="text" name="username" value="{{user.username}}" maxlength="100" class="form-control">
+                                        <br/>
+                                        <div class="col-md-12">
+                                            <button type="submit" class="btn btn-fill-out" name="submit" value="Submit">تغییر نام کاربری</button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                                <form method="post" action="{% url 'account:email-activate' %}">
+                                    {% csrf_token %}
+                                    <div class="form-group col-12">
+                                        <label>ایمیل کاربری<span class="required">*</span></label>
+                                        <input type="text" name="email" value="{{user.email}}" maxlength="100" class="form-control">
+                                        <br/>
+                                        <div class="col-md-12">
+                                            <button type="submit" class="btn btn-fill-out" name="submit" value="Submit">تغییر ایمیل / فعالسازی</button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                                <form method="post" name="enq" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                    <div class="row mb-5">
+                                        
+                                        <div class="form-group col-md-6">
+                                        	<label>کد ملی <span class="required">*</span></label>
+                                            {{form.national_code}}
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                        	<label>نام <span class="required">*</span></label>
+                                            {{form.first_name}}
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                        	<label>نام خانوادگی <span class="required">*</span></label>
+                                            {{form.last_name}}
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                        	<label>تصویر پروفایل <span class="required">*</span></label>
+                                            {{form.image}}
+                                        </div>
+                                        <div class="col-md-12">
+                                            <button type="submit" class="btn btn-fill-out" name="submit" value="Submit">ذخیره</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                  	</div>
+                  	{% comment %} <div class="tab-pane fade" id="orders" role="tabpanel" aria-labelledby="orders-tab">
+                    	<div class="card">
+                        	<div class="card-header">
+                                <h3>سفارشات</h3>
+                            </div>
+                            <div class="card-body">
+                    			<div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>سفارش</th>
+                                                <th>تاریخ</th>
+                                                <th>وضعیت</th>
+                                                <th>جمع</th>
+                                                <th>تصویر</th>
+                                                <th>مبلغ نهایی</th>
+                                                <th>کد پیگیری</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for item in order %}
+                                            <tr>
+                                                {% if item.product.variants == 'None' %}
+                                                <td>#{{forloop.counter}} {{item.product}}</td>
+                                                {% elif item.product.variants == 'Size' %}
+                                                <td>#{{forloop.counter}} {{item.product}} {{item.variant.size}}</td>
+                                                {% elif item.product.variants == 'Color' %}
+                                                <td>#{{forloop.counter}} {{item.product}} {{item.variant.color}}</td>
+                                                {% elif item.product.variants == 'Size-Color' %}
+                                                <td>#{{forloop.counter}} {{item.product}} {{item.variant.size}} {{item.variant.color}}</td>
+                                                {% endif %}
+                                                <td>{{item.jcreated}}</td>
+                                                <td>{{item.order.status}}</td>
+                                                <td>{{item.total_price|intcomma}} تومان {{item.quantity}} عدد</td>
+                                                <td><img src="{{item.product.image.url}}" width="100px"></td>
+                                                <td>{{item.order.off_price|intcomma}}</td>
+                                                <td>{{item.order.code}}</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                  	</div> {% endcomment %}
+					<div class="tab-pane fade" id="address" role="tabpanel" aria-labelledby="address-tab">
+
+                            <div class="card-body mb-4">
+                    			<p>افزودن آدرس جدید</p>
+                                <form method="post" action="{% url 'account:profile_address' %}">
+                                    {% csrf_token %}
+                                    <div class="row">
+                                        <div class="form-group col-md-12">
+                                        	<label>کد پستی <span class="required">*</span></label>
+                                            {{address_form.postal_code}}
+                                         </div>
+                                         <div class="form-group col-md-6">
+                                        	<label>استان <span class="required">*</span></label>
+                                            {{address_form.province}}
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                        	<label>شهر <span class="required">*</span></label>
+                                            {{address_form.city}}
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                        	<label>آدرس <span class="required">*</span></label>
+                                            {{address_form.address}}
+                                        </div>
+                                        <div class="col-md-12">
+                                            <button type="submit" class="btn btn-fill-out" name="submit" value="Submit">ذخیره</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                    	<div class="row">
+                            {% for address in address %}
+                        	<div class="col-lg-6">
+                                <div class="card mb-3 mb-lg-0">
+                                    <div class="card-header">
+                                        <h3>آدرس</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>{{address.postal_code}}</p>
+                                        <p>{{address.province}}</p>
+                                        <p>{{address.city}}</p>
+                                        <address>{{address.address}}</address>
+                                        <a href="#" class="btn btn-fill-out">حذف</a>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+					</div>
+                    <div class="tab-pane fade" id="account-detail" role="tabpanel" aria-labelledby="account-detail-tab">
+						<div class="card">
+                        	<div class="card-header">
+                                <h3>جزئیات حساب</h3>
+                            </div>
+                            <div class="card-body">
+                    			<p>قبلاً حساب دارید؟ <a href="#">وارد شوید!</a></p>
+                                <form method="post" name="enq">
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                        	<label>نام <span class="required">*</span></label>
+                                            <input required="" class="form-control" name="name" type="text">
+                                         </div>
+                                         <div class="form-group col-md-6">
+                                        	<label>نام خانوادگی <span class="required">*</span></label>
+                                            <input required="" class="form-control" name="phone">
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                        	<label>نام کاربری <span class="required">*</span></label>
+                                            <input required="" class="form-control" name="dname" type="text">
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                        	<label>آدرس ایمیل <span class="required">*</span></label>
+                                            <input required="" class="form-control" name="email" type="email">
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                        	<label>کلمه عبور فعلی <span class="required">*</span></label>
+                                            <input required="" class="form-control" name="password" type="password">
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                        	<label>کلمه عبور جدید <span class="required">*</span></label>
+                                            <input required="" class="form-control" name="npassword" type="password">
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                        	<label>تأیید کلمه عبور <span class="required">*</span></label>
+                                            <input required="" class="form-control" name="cpassword" type="password">
+                                        </div>
+                                        <div class="col-md-12">
+                                            <button type="submit" class="btn btn-fill-out" name="submit" value="Submit">ذخیره</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- END SECTION SHOP -->
+
+
+</div>
+<!-- END MAIN CONTENT -->
+
+{% endblock content %}

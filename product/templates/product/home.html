@@ -1,0 +1,257 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}صفحه اصلی{% endblock title %}
+
+{% block content %}
+
+    <!-- START SECTION BANNER -->
+<div class="banner_section slide_medium shop_banner_slider staggered-animation-wrap">
+    <div id="carouselExampleControls" class="carousel slide carousel-fade light_arrow" data-ride="carousel">
+        <div class="carousel-inner">
+            {% for variant in products %}
+            
+            <div class="carousel-item background_bg active" data-img-src="{{variant.image.url}}">
+                <div class="banner_slide_content banner_content_inner">
+                	<div class="container">
+                    	<div class="row">
+                            <div class="col-lg-7 col-10">
+                                <div class="banner_content overflow-hidden">
+                                    <h2 class="staggered-animation" data-animation="slideInRight" data-animation-delay="0.5s">{{variant.title}}</h2>
+                                    <h5 class="mb-3 mb-sm-4 staggered-animation font-weight-light" data-animation="slideInRight" data-animation-delay="1s">تا  <span class="text_default">50٪ تخفیف</span> فقط امروز!</h5>
+                                    <a class="btn btn-fill-out staggered-animation text-uppercase" href="{{variant.get_absolute_url}}" data-animation="slideInRight" data-animation-delay="1.5s">اکنون خرید کنید</a>
+                                </div>
+                            </div>
+                    	</div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev"><i class="ion-chevron-left"></i></a>
+        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next"><i class="ion-chevron-right"></i></a>
+    </div>
+</div>
+<!-- END SECTION BANNER -->
+
+<!-- END MAIN CONTENT -->
+<div class="main_content">
+
+<!-- START SECTION BANNER --> 
+<div class="section pb_20 small_pt">
+	<div class="container">
+    	<div class="row">
+        	<div class="col-md-4">
+            	<div class="sale-banner mb-3 mb-md-4">
+                	<a class="hover_effect1" href="#">
+                		<img src="{% static 'assets/images/shop_banner_img7.jpg' %}" alt="shop_banner_img7">
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-4">
+            	<div class="sale-banner mb-3 mb-md-4">
+                	<a class="hover_effect1" href="#">
+                		<img src="{% static 'assets/images/shop_banner_img8.jpg' %}" alt="shop_banner_img8">
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-4">
+            	<div class="sale-banner mb-3 mb-md-4">
+                	<a class="hover_effect1" href="#">
+                		<img src="{% static 'assets/images/shop_banner_img9.jpg' %}" alt="shop_banner_img9">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END SECTION BANNER -->
+
+<!-- START SECTION CATEGORIES -->
+<div class="section small_pb small_pt">
+	<div class="container">
+    	<div class="row justify-content-center">
+			<div class="col-md-6">
+                <div class="heading_s4 text-center">
+                    <h2>دسته بندی های محبوب</h2>
+                </div>
+                <p class="text-center leads">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است.</p>
+            </div>
+		</div>
+        <div class="row align-items-center">
+            <div class="col-12">
+                <div class="cat_slider cat_style1 mt-4 mt-md-0 carousel_slider owl-carousel owl-theme nav_style5" data-loop="true" data-dots="false" data-nav="true" data-margin="30" data-responsive='{"0":{"items": "2"}, "480":{"items": "3"}, "576":{"items": "4"}, "768":{"items": "5"}, "991":{"items": "6"}, "1199":{"items": "7"}}'>
+                    {% for category in categories %}
+                    <div class="item">
+                        <div class="categories_box">
+                            <a href="#">
+                                <span>{{category.title}}</span>
+                            </a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END SECTION CATEGORIES --> 
+
+<!-- START SECTION SHOP -->
+<div class="section small_pb small_pt">
+	<div class="container">
+        <div class="row justify-content-center">
+			<div class="col-md-6">
+            	<div class="heading_s1 text-center">
+                	<h2>محصولات اختصاصی</h2>
+                </div>
+            </div>
+		</div>
+        <div class="row">
+            <div class="col-12">
+            	<div class="tab-style1">
+                    <ul class="nav nav-tabs justify-content-center" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="arrival-tab" data-toggle="tab" href="#arrival" role="tab" aria-controls="arrival" aria-selected="true">محصول جدید</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="sellers-tab" data-toggle="tab" href="#sellers" role="tab" aria-controls="sellers" aria-selected="false">پرفروش</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="featured-tab" data-toggle="tab" href="#featured" role="tab" aria-controls="featured" aria-selected="false">محصولات پر بازدید</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tab_slider tab-content">
+                    <div class="tab-pane fade show active" id="arrival" role="tabpanel" aria-labelledby="arrival-tab">
+                        <div class="product_slider carousel_slider owl-carousel owl-theme dot_style1" data-loop="true" data-margin="20" data-responsive='{"0":{"items": "1"}, "481":{"items": "2"}, "768":{"items": "3"}, "991":{"items": "4"}}'>
+                            {% for product in products %}
+                            <div class="item">
+                                <div class="product_wrap">
+                                    <div class="product_img">
+                                        <a href="{{product.get_absolute_url}}">
+                                            <img src="{{product.image.url}}" alt="el_img1">
+                                            <img class="product_hover_img" src="{{product.image.url}}" alt="el_hover_img1">
+                                        </a>
+                                        <div class="product_action_box">
+                                            <ul class="list_none pr_action_btn">
+                                                <li class="add-to-cart"><a href="#"><i class="icon-basket-loaded"></i> افزودن به سبد خرید</a></li>
+                                                <li><a href="shop-compare.html" class="popup-ajax"><i class="icon-shuffle"></i></a></li>
+                                                <li><a href="shop-quick-view.html" class="popup-ajax"><i class="icon-magnifier-add"></i></a></li>
+                                                <li><a href="#"><i class="icon-heart"></i></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="product_info">
+                                        <h6 class="product_title"><a href="{{product.get_absolute_url}}">{{product.title}}</a></h6>
+                                        <div class="product_price">
+                                            <span class="price">{{product.total_price}} تومان</span>
+                                            {% if product.discount != 0 %}
+                                            <del>{{product.price}} تومان</del>
+                                            <div class="on_sale">
+                                                <span>٪{{product.discount}} تخفیف</span>
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="rating_wrap">
+                                            <div class="rating">
+                                                <div class="product_rate" style="width:80%"></div>
+                                            </div>
+                                            <span class="rating_num">(21)</span>
+                                        </div>
+                                        <div class="pr_desc">
+                                            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="sellers" role="tabpanel" aria-labelledby="sellers-tab">
+                        <div class="product_slider carousel_slider owl-carousel owl-theme dot_style1" data-loop="true" data-margin="20" data-responsive='{"0":{"items": "1"}, "481":{"items": "2"}, "768":{"items": "3"}, "991":{"items": "4"}}'>
+                            {% for product in most_sell_products %}
+                            <div class="item">
+                                <div class="product_wrap">
+                                    <div class="product_img">
+                                        <a href="shop-product-detail.html">
+                                            <img src="{{product.image.url}}" alt="el_img7">
+                                            <img class="product_hover_img" src="{{product.image.url}}" alt="el_hover_img7">
+                                        </a>
+                                        <div class="product_action_box">
+                                            <ul class="list_none pr_action_btn">
+                                                <li class="add-to-cart"><a href="#"><i class="icon-basket-loaded"></i> افزودن به سبد خرید</a></li>
+                                                <li><a href="shop-compare.html" class="popup-ajax"><i class="icon-shuffle"></i></a></li>
+                                                <li><a href="shop-quick-view.html" class="popup-ajax"><i class="icon-magnifier-add"></i></a></li>
+                                                <li><a href="#"><i class="icon-heart"></i></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="product_info">
+                                        <h6 class="product_title"><a href="shop-product-detail.html">{{product.title}}</a></h6>
+                                        <div class="product_price">
+                                            <span class="price">{{product.total_price}} تومان</span>
+                                            <del>{{product.price}} تومان</del>
+                                            <div class="on_sale">
+                                                <span>٪{{product.discount}} تخفیف</span>
+                                            </div>
+                                        </div>
+                                        <div class="pr_desc">
+                                            <p>{{product.description}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="featured" role="tabpanel" aria-labelledby="featured-tab">
+                        <div class="product_slider carousel_slider owl-carousel owl-theme dot_style1" data-loop="true" data-margin="20" data-responsive='{"0":{"items": "1"}, "481":{"items": "2"}, "768":{"items": "3"}, "991":{"items": "4"}}'>
+                            {% for product in most_sell_products %}
+                            <div class="item">
+                                <div class="product_wrap">
+                                    <div class="product_img">
+                                        <a href="shop-product-detail.html">
+                                            <img src="{{product.image.url}}" alt="el_img8">
+                                            <img class="product_hover_img" src="{{product.image.url}}" alt="el_hover_img8">
+                                        </a>
+                                        <div class="product_action_box">
+                                            <ul class="list_none pr_action_btn">
+                                                <li class="add-to-cart"><a href="#"><i class="icon-basket-loaded"></i> افزودن به سبد خرید</a></li>
+                                                <li><a href="shop-compare.html" class="popup-ajax"><i class="icon-shuffle"></i></a></li>
+                                                <li><a href="shop-quick-view.html" class="popup-ajax"><i class="icon-magnifier-add"></i></a></li>
+                                                <li><a href="#"><i class="icon-heart"></i></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="product_info">
+                                        <h6 class="product_title"><a href="shop-product-detail.html">دوربین وبکم</a></h6>
+                                        <div class="product_price">
+                                            <span class="price">{{product.total_price}} تومان</span>
+                                            <del>{{product.price}} تومان</del>
+                                            <div class="on_sale">
+                                                <span>٪{{product.discount}} تخفیف</span>
+                                            </div>
+                                        </div>
+                                        <div class="rating_wrap">
+                                            <div class="rating">
+                                                <div class="product_rate" style="width:68%"></div>
+                                            </div>
+                                            <span class="rating_num">(15)</span>
+                                        </div>
+                                        <div class="pr_desc">
+                                            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END SECTION SHOP -->
+
+{% endblock content %}

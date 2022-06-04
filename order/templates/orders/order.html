@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% block title %}سفارش محصولات{% endblock title %}
+
+{% block content %}
+
+    <!-- START MAIN CONTENT -->
+<div class="main_content">
+
+    <!-- START SECTION SHOP -->
+    <div class="section">
+        <div class="container">
+            <div class="row">
+            </div>
+            <div class="row">
+                <div class="table-responsive shop_cart_table">
+                	<table class="table">
+                        <tfoot>
+                        	<tr>
+                            	<td colspan="6" class="px-0">
+                                	<div class="row no-gutters align-items-center">
+
+                                    	<div class="col-lg-4 col-md-6 mb-3 mb-md-0">
+                                            <form action="{% url 'orders:apply_coupon' order.id %}" method="post" class="coupon field_form input-group">
+                                                {% csrf_token %}
+                                                {{form.code}}
+                                                <div class="input-group-append">
+                                                	<button class="btn btn-fill-out btn-sm" type="submit">کوپن</button>
+                                                </div>
+                                            </form>
+                                    	</div>
+                                        <div class="col-lg-8 col-md-6 text-left text-md-right">
+                                            <button class="btn btn-line-fill btn-sm" type="submit">به روز رسانی سبد خرید</button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <div class="col-12">
+                    <div class="medium_divider"></div>
+                    <div class="divider center_icon"><i class="ti-shopping-cart-full"></i></div>
+                    <div class="medium_divider"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="heading_s1 mb-3">
+                        <h6>محاسبه هزینه ارسال</h6>
+                    </div>
+                    <form method="post">
+                        {% csrf_token %}
+                            <div class="form-group">
+                                {{order_form.first_name.label_tag}}
+                                {{order_form.first_name}}
+                            </div>
+                            <div class="form-group">
+                                {{order_form.last_name.label_tag}}
+                                {{order_form.last_name}}
+                            </div>
+                            <div class="form-group">
+                                {{order_form.national_code.label_tag}}
+                                {{order_form.national_code}}
+                            </div>
+                            <div class="form-group">
+                                {{order_form.address.label_tag}}
+                                <select name="address" class="form-control" placeholder="آدرس" id="id_address">
+                                    <option value selected>---------</option>
+                                    {% for item in user_address %}
+                                        <option value="{{item.id}}">{{item.address}}</option>
+                                    {% endfor %}
+                                </select>
+                                <label>در صورت موجود نبودن آدرس از این <a href="{% url 'account:edit_profile' %}">لینک</a> اضافه کنید</label>
+                            </div>
+                            <button type="submit" class="btn btn-fill-out btn-block">ترتیب سفارش</button>
+                    </form>
+                </div>
+                <div class="col-md-6">
+                    <div class="border p-3 p-md-4">
+                        <div class="heading_s1 mb-3">
+                            <h6>جمع سبد خرید</h6>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <td class="cart_total_label">جمع سبد خرید</td>
+                                        <td class="cart_total_amount">{{order.get_total_price}} تومان</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <a href="{% url 'orders:order_pay' order.id %}" class="btn btn-fill-out">ادامه</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END SECTION SHOP -->
+    
+    </div>
+    <!-- END MAIN CONTENT -->
+
+{% endblock content %}

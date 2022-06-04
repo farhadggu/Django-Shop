@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% block title %}محصول {{product.title}}{% endblock title %}
+
+{% block content %}
+
+<!-- START MAIN CONTENT -->
+<div class="main_content">
+
+    <!-- START SECTION SHOP -->
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="table-responsive shop_cart_table">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th class="product-thumbnail">&nbsp;</th>
+                                    <th class="product-name">محصول</th>
+                                    <th class="product-price">قیمت</th>
+                                    <th class="product-quantity">تعداد</th>
+                                    <th class="product-subtotal">جمع</th>
+                                    <th class="product-remove">حذف</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                {% for item in cart %}
+                                <tr>
+                                    <td class="product-thumbnail"><a href="#"><img src="{{item.product.image.url}}" alt="product1"></a></td>
+                                    <td class="product-name" data-title="محصول"><a href="#">{{item.product}}</a></td>
+                                    <td class="product-price" data-title="قیمت">{{item.price}} تومان</td>
+                                    <td class="product-quantity" data-title="تعداد"><div class="quantity">
+                                    <input type="button" value="-" class="minus">
+                                    <input type="text" name="quantity" value="{{item.quantity}}" title="Qty" class="qty" size="4">
+                                    <input type="button" value="+" class="plus">
+                                  </div></td>
+                                      <td class="product-subtotal" data-title="جمع">{{item.total_price}} تومان</td>
+                                    <td class="product-remove" data-title="حذف"><a href="{% url 'orders:cart_remove' item.product.id %}"><i class="ti-close"></i></a></td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="medium_divider"></div>
+                    <div class="divider center_icon"><i class="ti-shopping-cart-full"></i></div>
+                    <div class="medium_divider"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="border p-3 p-md-4">
+                        <div class="heading_s1 mb-3">
+                            <h6>جمع سبد خرید</h6>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <td class="cart_total_label">جمع سبد خرید</td>
+                                        <td class="cart_total_amount">{{cart.get_total_price}} تومان</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <a href="{% url 'orders:order_create' %}" class="btn btn-fill-out">ادامه</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END SECTION SHOP -->
+    
+    </div>
+    <!-- END MAIN CONTENT -->
+{% endblock content %}

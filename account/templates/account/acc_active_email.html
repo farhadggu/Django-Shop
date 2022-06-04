@@ -1,0 +1,5 @@
+{% autoescape off %}
+سلام {{ user.username.profile.full_name }},
+لطفا جهت فعالسازی ایمیل خود بر روی لینک زیر کلیلک کنید
+http://{{ domain }}{% url 'account:activate' uidb64=uid token=token email=email %}
+{% endautoescape %}
