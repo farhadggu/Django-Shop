@@ -1,9 +1,6 @@
 # Django-Advance-Shop
 پروژه پیشرفته سایت فروشگاهی به وسیله فریمورک جنگو (Advanced Shop Site Project by Django Framework)
 
-
-Live Demo ===> http://farhadggu.pythonanywhere.com/
-
 سایت فروشگاهی کالا های دیجیتال با ویژگی ها و امکانات پیشرفته
 
 1.احراز هویت 4 روش ==> (نام کاربری-ایمیل کاربری-شماره تماس-ورود با اکانت گوگل)
