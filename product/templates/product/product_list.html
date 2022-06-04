@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load myapp_extras %}
+{% block title %}تمامی محصولات{% endblock title %}
+
+{% block content %}
+
+    <!-- START MAIN CONTENT -->
+<div class="main_content">
+
+    <!-- START SECTION SHOP -->
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-9">
+                    <div class="row align-items-center mb-4 pb-1">
+                        <div class="col-12">
+                            <div class="product_header">
+                                <div class="product_header_right">
+                                    <div class="products_view">
+                                        <a href="javascript:Void(0);" class="shorting_icon grid"><i class="ti-view-grid"></i></a>
+                                        <a href="javascript:Void(0);" class="shorting_icon list active"><i class="ti-layout-list-thumb"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                    <div class="row shop_container list">
+                        {% for product in products %}
+                        <div class="col-md-4 col-6">
+                            <div class="product">
+                                <div class="product_img">
+                                    <a href="{{product.get_absolute_url}}">
+                                        <img src="{{product.image.url}}" alt="product_img1">
+                                    </a>
+                                </div>
+                                <div class="product_info">
+                                    <h6 class="product_title"><a href="{{product.get_absolute_url}}">{{product.title}}</a></h6>
+                                    <div class="product_price">
+                                        <span class="price">{{product.total_price}} تومان</span>
+                                        {% if product.discount != 0 %}
+                                        <del>{{product.price}} تومان</del>
+                                        <div class="on_sale">
+                                            <span>٪{{product.discount}} تخفیف</span>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="pr_desc">
+                                        <p>{{product.product.description|striptags|truncatechars:30}}</p>
+                                    </div>
+                                    <div class="pr_switch_wrap">
+                                        <div class="product_color_switch">
+                                            <span data-color="{{product.color.code}}"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <ul class="pagination mt-3 justify-content-center pagination_style1">
+                                {% if products.has_previous %}
+                                <li class="page-item"><a class="page-link" href="{% my_url products.previous_page_number 'page' request.GET.urlencode %}"><i class="linearicons-arrow-left"></i></a></li>
+                                {% endif %}
+                                {% if products.has_previous %}
+                                <li class="page-item"><a class="page-link" href="{% my_url products.previous_page_number 'page' request.GET.urlencode %}">{{ products.previous_page_number }}</a></li>
+                                {% endif %}
+                                <li class="page-item"><a class="page-link {% if page_num == page_num %}active {% endif %}" href="{% my_url products.number 'page' request.GET.urlencode %}">{{products.number}}</a></li>
+                                {% if products.has_next %}
+                                <li class="page-item"><a class="page-link" href="{% my_url products.next_page_number 'page' request.GET.urlencode %}">{{ products.next_page_number }}</a></li>
+                                {% endif %}
+                                {% if products.has_next %}
+                                <li class="page-item"><a class="page-link" href="{% my_url products.next_page_number 'page' request.GET.urlencode %}"><i class="linearicons-arrow-right"></i></a></li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 order-lg-first mt-4 pt-2 mt-lg-0 pt-lg-0">
+                    <div class="sidebar">
+                        <div class="widget">
+                            <h5 class="widget_title">دسته بندی ها</h5>
+                            <ul class="widget_categories">
+                                {% for category in categories %}
+                                <li><a href="{{category.get_absolute_url}}"><span class="categories_name">{{category.title}}</span><span class="categories_num">({{category.product_category.count}})</span></a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <form method="get" class="mt-4">
+                            <div class="widget">
+                                <h5 class="widget_title">فیتر محصولات</h5>
+                                <div class="product_color_switch">
+                                    <ul style="list-style-type: none;">{{filter.form|crispy}}</ul>
+                                </div>
+                            </div>
+                            <button class="mt-4 mb-4 btn-sm btn-success" type="submit">اعمال فیلتر</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END SECTION SHOP -->
+    
+    </div>
+    <!-- END MAIN CONTENT -->
+
+{% endblock content %}

@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}لینک فعالسازی ارسال شد{% endblock title %}
+
+{% block content %}
+
+<!-- START 404 SECTION -->
+<div class="section">
+	<div class="error_wrap">
+    	<div class="container">
+            <div class="row align-items-center justify-content-center">
+                <div class="col-lg-6 col-md-10 order-lg-first">
+                	<div class="text-center">
+                        <h5 class="mb-2 mb-sm-3">لینک فعالسازی برای ایمیل شما ارسال شد</h5> 
+                        <p>لطفا ایمیل خود را بررسی کنید</p>
+                        <a href="{% url 'product:home' %}" class="btn btn-fill-out">بازگشت به خانه</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END 404 SECTION -->
+
+{% endblock content %}

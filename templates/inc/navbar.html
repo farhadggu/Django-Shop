@@ -1,0 +1,97 @@
+{% load static %}
+<!-- START HEADER -->
+<header class="header_wrap">
+    <div class="middle-header dark_skin">
+    	<div class="container">
+            <div class="nav_block">
+                <a class="navbar-brand" href="{% url 'product:home' %}">
+                    <img class="logo_light" src="{% static 'assets/images/logo_light.png' %}" alt="logo">
+                    <img class="logo_dark" src="{% static 'assets/images/logo_dark.png' %}" alt="logo">
+                </a>
+                <ul class="navbar-nav attr-nav align-items-center">
+                    {% if request.user.is_authenticated %}
+                    <li><a href="{% url 'account:edit_profile' %}" class="nav-link"><i class="linearicons-user"></i></a></li>
+                    {% else %}
+                    <li><a href="{% url 'account:login' %}" class="nav-link"><i class="linearicons-user"></i></a></li>
+                    {% endif %}
+                    <li class="dropdown cart_dropdown"><a class="nav-link cart_trigger" href="#" data-toggle="dropdown"><i class="linearicons-bag2"></i><span class="cart_count">{{ cart|length }}</span><span class="amount">{{cart.get_total_price}}<span class="currency_symbol"> تومان</span></span></a>
+                        <div class="cart_box cart_right dropdown-menu dropdown-menu-right">
+                            <ul class="cart_list">
+                                {% for item in cart %}
+                                <li>
+                                    <a href="#" class="item_remove"><i class="ion-close"></i></a>
+                                    <a href="#"><img src="{{item.product.image.url}}" alt="cart_thumb1">{{product.title}}</a>
+                                    <span class="cart_quantity"> {{item.quantity}}عدد  {{item.price}}<span class="cart_amount"> <span class="price_symbole">تومان</span></span></span>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                            <div class="cart_footer">
+                                <p class="cart_total"><strong>جمع:</strong> {{cart.get_total_price}}<span class="cart_price"> <span class="price_symbole">تومان</span></span></p>
+                                <p class="cart_buttons"><a href="{% url 'orders:cart' %}" class="btn btn-fill-line view-cart">سبد خرید</a></p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="bottom_header dark_skin main_menu_uppercase border-top">
+    	<div class="container">
+            <div class="row align-items-center"> 
+            	<div class="col-lg-3 col-md-4 col-sm-6 col-3">
+                	<div class="categories_wrap">
+                        <button type="button" data-toggle="collapse" data-target="#navCatContent" aria-expanded="false" class="categories_btn categories_menu">
+                            <span>همه دسته بندی ها </span><i class="linearicons-menu"></i>
+                        </button>
+                        <div id="navCatContent" class="navbar collapse">
+                            <ul> 
+                                {% for category in categories %}
+                                <li class="dropdown dropdown-mega-menu">
+                                    <a class="dropdown-item nav-link dropdown-toggler" href="#" data-toggle="dropdown"><i class="flaticon-tv"></i> <span>{{category.title}}</span></a>
+                                    <div class="dropdown-menu">
+                                        <ul class="mega-menu d-lg-flex">
+                                            <li class="mega-menu-col col-lg-7">
+                                                <ul class="d-lg-flex">
+                                                    <li class="mega-menu-col col-lg-6">
+                                                        <ul>
+                                                            {% for children in category.category_parent.all %}
+                                                            <li><a class="dropdown-item nav-link nav_item" href="{{children.get_absolute_url}}">{{children.title}}</a></li>
+                                                            {% endfor %}
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-8 col-sm-6 col-9">
+                	<nav class="navbar navbar-expand-lg">
+                    	<button class="navbar-toggler side_navbar_toggler" type="button" data-toggle="collapse" data-target="#navbarSidetoggle" aria-expanded="false"> 
+                            <span class="ion-android-menu"></span>
+                        </button>
+                        <div class="pr_search_icon">
+                            <a href="javascript:void(0);" class="nav-link pr_search_trigger"><i class="linearicons-magnifier"></i></a>
+                        </div> 
+                        <div class="collapse navbar-collapse mobile_side_menu" id="navbarSidetoggle">
+                            <ul class="navbar-nav">
+                                <li class="dropdown">
+                                    <a data-toggle="dropdown" class="nav-link active" href="#">خانه</a>
+                                </li>
+                                <li><a class="nav-link nav_item" href="{% url 'product:product_list' %}">همه محصولات</a></li>
+                                <li><a class="nav-link nav_item" href="contact.html">تماس با ما</a></li>
+                                <li><a class="nav-link nav_item" href="contact.html">درباره ما</a></li>
+                                <li><a class="nav-link nav_item" href="{% url 'account:logout' %}">خروج از حساب</a></li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- END HEADER -->
